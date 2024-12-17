@@ -1,30 +1,8 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
+import Header from "./components/Header";
+import Body from "./components/Body";
 
-const Header = () => {
-    return (
-        <div className="header">
-            <div className ="logo - container">
-                <img className ="logo" src =" https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQZB-sbuI_mSzHI3rvvC0ZXus0WGwDKq99frg&s"/>
-            </div>
-            <div className =" nav-items">
-                <ul>
-                <li>Home</li>
-                <li>About Us</li>
-                <li>Contact Us</li>
-                <li>Cart</li>
-                </ul>             
-            </div>
-        </div>
-
-    )
-    
-}
-
-const styleCard= {
-    backgroundColor : "0f0f0f"
-
-}
 
 // const RestaurantCard = (props)=>{
 //     const {resData} =  props;
@@ -44,29 +22,7 @@ const styleCard= {
 //     );
 // };
 
-const RestaurantCard = (props) => {
-    const { resData } = props;
-  
-    // Conditional rendering to handle undefined data
-    if (!resData || !resData.info) {
-      return <div>Loading...</div>; // Display a loading message or placeholder
-    }
-  
-    return (
-      <div className="res-card" style={styleCard}>
-        <img
-          className="res-logo"
-          alt="res-logo"
-          src={`https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_660/${resData.info.cloudinaryImageId}`}
-        />
-        <h3>{resData.info.name}</h3>
-        <h4>{resData.info.cuisines.join(", ")}</h4>
-        <h4>{resData.info.costForTwo}</h4>
-        <h4>{resData.info.sla.slaString}</h4>
-        <h4>{resData.info.avgRating} Stars</h4>
-      </div>
-    );
-  };
+
   
 // const resObj = {          
 //     "info": {
@@ -166,38 +122,9 @@ const RestaurantCard = (props) => {
 //     }
 //   };
 
-  const resObj = {
-    info: {
-      id: "671928",
-      name: "KFC",
-      cloudinaryImageId:
-        "RX_THUMBNAIL/IMAGES/VENDOR/2024/12/9/377e9327-3ca7-48ac-b36c-96f5bf6e186a_671928.JPG",
-      locality: "7th Block",
-      areaName: "Koramangla",
-      costForTwo: "₹400 for two",
-      cuisines: ["Burgers", "Fast Food", "Rolls & Wraps"],
-      avgRating: 4.3,
-      sla: {
-        slaString: "15-20 mins",
-      },
-    },
-  };
-  
 
-const Body =() =>{
-    return(
-        <div className="body">
-            <div className="search "> Search </div>
-            <div className="res-container "> 
-                <RestaurantCard
-                resData={resObj}/>
-                <RestaurantCard/>
-            
-            </div>
-        </div>
-    )
 
-}
+
 
 const AppLayout = () => {
     return <div className= "app">
