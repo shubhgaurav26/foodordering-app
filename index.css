@@ -88,3 +88,17 @@
 .filter{
     display:flex;
 }
+
+.user-card{
+    padding:10px;
+    border:1px solid black;
+
+}
+
+.agtar-img {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    object-fit: cover;
+    overflow: hidden;
+}
