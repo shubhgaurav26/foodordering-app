@@ -7,15 +7,23 @@ import Error from "./components/Error";
 import RestaurantMenu from "./components/RestaurantMenu";
 import { createBrowserRouter, RouterProvider, Outlet } from "react-router-dom";
 import About from "./components/About";
+// import UserContext from "./utils/UserContext";
+import {Provider} from "react-redux"
+import appStore from "./utils/appstore";
+import Cart from "./components/Cart";
 
 // App layout with Header and Body
 const AppLayout = () => {
+
   return (
+    <Provider store ={appStore}>
     <div className="bg-pink-50 min-h-screen">
       <Header />
       <Outlet />
-    </div>
-  );
+      </div> 
+       </Provider>
+   
+  ); 
 };
 
 const appRouter = createBrowserRouter([
@@ -27,6 +35,7 @@ const appRouter = createBrowserRouter([
       { path: "/about", element: <About /> },
       { path: "/contact", element: <Contact /> },
       { path: "/restaurants/:resId", element: <RestaurantMenu /> },
+      { path: "/cart", element: <Cart/> },
     ],
     errorElement: <Error />,
   },

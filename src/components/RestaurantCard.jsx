@@ -13,7 +13,7 @@ const RestaurantCard = (props) => {
   } = resData?.info;
 
   return (
-    <div className="res-card bg-pink-50 p-4 rounded-xl shadow-lg border border-pink-200 hover:shadow-xl transition-shadow duration-300">
+    <div className="res-card bg-pink-50 p-4 rounded-xl shadow-lg border border-pink-200 hover:bg-pink-100 hover:shadow-xl hover:border-pink-300 transition-all duration-300">
       {/* Image Section */}
       <img
         className="res-logo w-full h-40 object-cover rounded-lg"
@@ -30,13 +30,13 @@ const RestaurantCard = (props) => {
         <p className="text-sm text-pink-600 truncate">{cuisines.join(", ")}</p>
         <div className="flex justify-between items-center mt-2">
           <p className="text-sm font-semibold text-pink-700">{costForTwo}</p>
-          <span className="bg-pink-300 text-pink-800 text-xs font-semibold px-2 py-1 rounded-md">
+          <span className="bg-pink-300 text-pink-800 text-xs font-semibold px-2 py-1 rounded-md shadow-sm">
             {avgRating} ⭐
           </span>
         </div>
         <p className="text-sm font-medium text-pink-700 mt-2 flex items-center">
           {slaString}
-          <span className="ml-2 text-pink-500">🚴‍♂️</span>
+          <span className="ml-2 text-pink-500 text-xs">🚴‍♂️</span>
         </p>
       </div>
     </div>
