@@ -1,44 +1,35 @@
-import { useDispatch, useSelector } from "react-redux";
-import { clearCart } from "../utils/cartSlice";
-import ItemList from "./ItemList"; // Assuming you have the ItemList component for rendering cart items
+// Cart.js  
+import { useDispatch, useSelector } from "react-redux";  
+import { clearCart } from "../utils/cartSlice";  
+import ItemList from "./ItemList";  
 
-const Cart = () => {
-    const cartItems = useSelector((store) => store.cart.items); // Fetch cart items from Redux store
-    const dispatch = useDispatch();
+const Cart = () => {  
+    const cartItems = useSelector((store) => store.cart.items);  
+    const dispatch = useDispatch();  
 
-    const handleClearCart = () => {
-        dispatch(clearCart()); // Dispatch action to clear cart
-    };
+    const handleClearCart = () => {  
+        dispatch(clearCart());  
+    };  
 
-    return (
-        <div className="container mx-auto my-8 p-4">
-            {/* Title */}
-            <h1 className="text-3xl font-bold text-center text-pink-900 mb-4">Your Cart</h1>
-
-            {/* Cart Items or Empty Cart Message */}
-            <div className="w-full max-w-6xl mx-auto">
-                {/* Clear Cart Button */}
-                <button
-                    className="w-full md:w-1/4 p-2 mb-4 bg-red-600 text-white rounded-lg shadow-lg hover:bg-red-700"
-                    onClick={handleClearCart}
-                >
-                    Clear Cart
-                </button>
-
-                {/* If no items, display empty cart message */}
-                {cartItems.length === 0 ? (
-                    <div className="text-center text-lg text-gray-500">
-                        <p>Your cart is empty. Add some items to the cart.</p>
-                    </div>
-                ) : (
-                    <div>
-                        {/* Cart Items */}
-                        <ItemList items={cartItems} showAddButton={false} />
-                    </div>
-                )}
-            </div>
-        </div>
-    );
-};
+    return (  
+        <div className="text-center m-4 p-4">  
+            <h1 className="text-2xl font-bold">Cart</h1>  
+            <div className="w-6/12 m-auto">  
+                <button  
+                    aria-label="Clear all items from the cart"  
+                    className="p-2 m-2 bg-black text-white"  
+                    onClick={handleClearCart}  
+                >  
+                    Clear Cart  
+                </button>  
+                {cartItems.length === 0 ? (  
+                    <h1>Cart is empty. Add items to the cart</h1>  
+                ) : (  
+                    <ItemList items={cartItems} showAddButton={false} />  
+                )}  
+            </div>  
+        </div>  
+    );  
+};  
 
 export default Cart;
