@@ -108,9 +108,9 @@ const Contact = () => {
 
           <div>  
             <h3 className="text-xl font-semibold text-pink-600">Our Location</h3>  
-            <p className="mt-2"><strong>Email:</strong> support@example.com</p>  
-            <p className="mt-2"><strong>Phone:</strong> +1 (555) 123-4567</p>  
-            <p className="mt-2"><strong>Address:</strong> 123 Food St, Food City, FC 12345</p>  
+            <p className="mt-2"><strong>Email:</strong> support@bitebloom.com</p>  
+            <p className="mt-2"><strong>Phone:</strong> +91 9090909090</p>  
+            <p className="mt-2"><strong>Address:</strong> 123 Food St, Delhi,India ,110005</p>  
 
             {/* Embed Google Map */}  
             <div className="mt-4">  

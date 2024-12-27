@@ -2,30 +2,49 @@ import RestaurantCard from "./RestaurantCard";
 import { useEffect, useState } from "react";  
 import Shimmer from "./Shimmer";  
 import { Link } from "react-router-dom";  
-import WhatsOnYourMind from "./WhatsOnYourMind"; // Import the WhatsOnYourMind component  
+import WhatsOnYourMind from "./WhatsOnYourMind";  
 
 const Body = () => {  
-  const [listOfRestaurants, setListOfRestaurant] = useState([]);  
+  const [listOfRestaurants, setListOfRestaurants] = useState([]);  
   const [filteredRestaurant, setFilteredRestaurant] = useState([]);  
   const [searchText, setSearchText] = useState("");  
   const [filterOption, setFilterOption] = useState("all");  
-  const [whatsOnYourMind, setWhatsOnYourMind] = useState([]); // Changed to an array  
+  const [whatsOnYourMind, setWhatsOnYourMind] = useState([]);  
+  const [page, setPage] = useState(1);  
+  const [loading, setLoading] = useState(false);  
+  const [hasMore, setHasMore] = useState(true);  
 
   useEffect(() => {  
-    fetchData();  
-  }, []);  
+    fetchData(page);  
+  }, [page]);  
 
-  const fetchData = async () => {  
-    const data = await fetch(  
-      "https://www.swiggy.com/dapi/restaurants/list/v5?lat=12.9352403&lng=77.624532&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING"  
-    );  
-    const json = await data.json();  
-    setListOfRestaurant(json?.data?.cards[4]?.card?.card?.gridElements?.infoWithStyle?.restaurants);  
-    setFilteredRestaurant(json?.data?.cards[4]?.card?.card?.gridElements?.infoWithStyle?.restaurants);  
+  const fetchData = async (page) => {  
+    if (loading || !hasMore) return; // Prevent multiple fetches while loading  
+    setLoading(true);  
 
-    // Extracting "What's on your mind?" image grid cards  
-    const whatsOnYourMindData = json?.data?.cards[0]?.card?.card?.imageGridCards?.info || [];  
-    setWhatsOnYourMind(whatsOnYourMindData);  
+    try {  
+      const data = await fetch(  
+        `https://www.swiggy.com/dapi/restaurants/list/v5?lat=12.9352403&lng=77.624532&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING&page=${page}`  
+      );  
+      const json = await data.json();  
+
+      const newRestaurants = json?.data?.cards[4]?.card?.card?.gridElements?.infoWithStyle?.restaurants || [];  
+      
+      if (newRestaurants.length === 0) {  
+        setHasMore(false); // No more data to load  
+      } else {  
+        setListOfRestaurants((prev) => [...prev, ...newRestaurants]);  
+        setFilteredRestaurant((prev) => [...prev, ...newRestaurants]);  
+      }  
+
+      // Extracting "What's on your mind?" image grid cards  
+      const whatsOnYourMindData = json?.data?.cards[0]?.card?.card?.imageGridCards?.info || [];  
+      setWhatsOnYourMind(whatsOnYourMindData);  
+    } catch (error) {  
+      console.error("Failed to fetch data:", error);  
+    } finally {  
+      setLoading(false);  
+    }  
   };  
 
   const handleFilterChange = (e) => {  
@@ -64,20 +83,33 @@ const Body = () => {
     setFilteredRestaurant(filteredRestaurantList);  
   };  
 
+  const handleScroll = () => {  
+    const bottom = window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 1;  
+    if (bottom && hasMore && !loading) {  
+      setPage((prev) => prev + 1);  
+    }  
+  };  
+
+  useEffect(() => {  
+    window.addEventListener("scroll", handleScroll);  
+    return () => {  
+      window.removeEventListener("scroll", handleScroll);  
+    };  
+  }, [loading, hasMore]);  
+
   if (listOfRestaurants.length === 0) {  
     return <Shimmer />;  
   }  
 
   return (  
     <div className="body p-6 bg-pink-50">  
-      {/* Use the WhatsOnYourMind component here */}  
       <WhatsOnYourMind items={whatsOnYourMind} />  
 
-      <div className="filter flex justify-center items-center mb-6 space-x-4">  
-        <div className="search flex items-center space-x-2">  
+      <div className="filter flex flex-col md:flex-row justify-center items-center mb-6 space-x-0 md:space-x-4 space-y-4 md:space-y-0">  
+        <div className="search flex items-center space-x-2 w-full md:w-1/3">  
           <input  
             type="text"  
-            className="search-box px-4 py-2 border border-pink-300 rounded-md"  
+            className="search-box w-full px-4 py-3 border border-pink-300 rounded-lg shadow-sm focus:ring-2 focus:ring-pink-500 focus:outline-none transition duration-300"  
             placeholder="Enter restaurant name"  
             value={searchText}  
             onChange={handleSearchChange}  
@@ -85,7 +117,7 @@ const Body = () => {
         </div>  
 
         <select  
-          className="filter-select bg-pink-300 text-pink-800 px-4 py-2 rounded-md hover:bg-pink-400"  
+          className="filter-select w-full md:w-1/3 bg-pink-300 text-pink-800 px-4 py-3 rounded-lg hover:bg-pink-400 focus:outline-none focus:ring-2 focus:ring-pink-500 transition duration-300"  
           value={filterOption}  
           onChange={handleFilterChange}  
         >  
@@ -103,6 +135,8 @@ const Body = () => {
           </Link>  
         ))}  
       </div>  
+
+      {loading && <Shimmer />} {/* Show loading indicator while fetching */}  
     </div>  
   );  
 };  

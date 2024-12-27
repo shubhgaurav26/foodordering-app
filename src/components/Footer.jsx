@@ -32,8 +32,8 @@ const Footer = () => {
 
         <div className="mb-4 md:mb-0">  
           <h4 className="text-lg font-bold mb-2">Contact Us</h4>  
-          <p className="text-sm">Email: <a href="mailto:support@example.com" className="text-pink-400 hover:underline">support@example.com</a></p>  
-          <p className="text-sm">Phone: +1 (555) 123-4567</p>  
+          <p className="text-sm">Email: <a href="mailto:support@bitebloom.com" className="text-pink-400 hover:underline">support@bitebloom.com</a></p>  
+          <p className="text-sm">Phone: +91 9090909090</p>  
         </div>  
 
         <div className="mb-4 md:mb-0">  

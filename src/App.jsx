@@ -11,7 +11,8 @@ import About from "./components/About";
 import { Provider } from "react-redux";  
 import appStore from "./utils/appstore";  
 import Cart from "./components/Cart";  
-import Footer from "./components/Footer"; // Import the Footer component  
+import Footer from "./components/Footer";  
+import OrderConfirmation from "./components/OrderConfirmation";   
 
 // App layout with Header and Body  
 const AppLayout = () => {  
@@ -20,7 +21,7 @@ const AppLayout = () => {
       <div className="bg-pink-50 min-h-screen">  
         <Header />  
         <Outlet />  
-        <Footer /> {/* Place Footer here */}  
+        <Footer />   
       </div>  
     </Provider>  
   );   
@@ -36,6 +37,7 @@ const appRouter = createBrowserRouter([
       { path: "/contact", element: <Contact /> },  
       { path: "/restaurants/:resId", element: <RestaurantMenu /> },  
       { path: "/cart", element: <Cart /> },  
+      { path: "/order-confirmation", element: <OrderConfirmation /> },  
     ],  
     errorElement: <Error />,  
   },  
